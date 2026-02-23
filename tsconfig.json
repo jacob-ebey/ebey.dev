@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2024", "DOM"],
+    "types": ["@hiogawa/vite-plugin-fullstack/types", "vite/client"],
+    "target": "ES2024",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "noEmit": true,
+  },
+}

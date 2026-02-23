@@ -1,0 +1,15 @@
+:root {
+  --bg-color: light-dark(#ffffff, #111111);
+  --text-color: light-dark(#333333, #cccccc);
+  --heading-color: light-dark(#000000, #ffffff);
+  --link-color: light-dark(#000000, #ffffff);
+  --link-hover: light-dark(#777777, #888888);
+  --border-color: light-dark(#e0e0e0, #333333);
+  --code-bg: light-dark(#f5f5f5, #1a1a1a);
+  --blockquote-border: light-dark(#aaaaaa, #555555);
+  --blockquote-bg: light-dark(#fafafa, #161616);
+  --table-stripes: light-dark(#fafafa, #161616);
+  --selection-bg: light-dark(#dddddd, #444444);
+  --mark-bg: light-dark(#eeeeee, #333333);
+  --mark-color: light-dark(#000000, #ffffff);
+}

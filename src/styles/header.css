@@ -1,0 +1,43 @@
+@import "./_variables.css";
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    view-transition-name: header;
+
+    & > a {
+        font-size: 1.1rem;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        flex-direction: row-reverse;
+        ul {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            gap: 1rem;
+            li {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                a {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.1rem;
+                    border-radius: 4px;
+                    &:hover {
+                        background-color: var(--selection-bg);
+                    }
+                }
+            }
+        }
+    }
+}
