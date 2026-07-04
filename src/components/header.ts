@@ -1,11 +1,17 @@
 import { html } from "enhanceable";
 
-export function Header({ open }: { open?: boolean }) {
+export function Header({
+  mainLink,
+  open,
+}: {
+  mainLink?: string;
+  open?: boolean;
+}) {
   return html`
     <header role="banner" class="header">
       ${open
         ? html`<span class="sr-only">ebey.dev</span>`
-        : html`<a href="/">ebey.dev</a>`}
+        : html`<a ${{ href: mainLink ?? "/" }}>ebey.dev</a>`}
       <nav aria-label="Primary">
         <ul>
           ${open

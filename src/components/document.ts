@@ -6,9 +6,11 @@ import "../global.css";
 
 export function Document({
   children,
+  mainLink,
   menuOpen,
 }: {
   children?: Child;
+  mainLink?: string;
   menuOpen?: boolean;
 }) {
   return html`
@@ -78,7 +80,7 @@ export function Document({
         </script>
       </head>
       <body>
-        <${Header} ${{ open: menuOpen }} />
+        <${Header} ${{ mainLink, open: menuOpen }} />
         ${children}
       </body>
     </html>

@@ -14,7 +14,7 @@ export const Menu = () =>
                 <a href="/">Projects</a>
             </li>
             <li>
-              <a href="https://ebey.leaflet.pub/" target="_blank" rel="noopener">
+              <a href="/blog">
                 Blog
               </a>
             </li>

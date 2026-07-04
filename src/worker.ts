@@ -4,6 +4,8 @@ import { html } from "enhanceable";
 import { Document } from "./components/document.ts";
 import { htmlResponse } from "./lib/response.ts";
 import { router } from "./lib/router.ts";
+import { Blog } from "./routes/blog.ts";
+import { BlogPost } from "./routes/blog-post.ts";
 import { Home } from "./routes/home.ts";
 import { Json } from "./routes/json.ts";
 import { Menu } from "./routes/menu.ts";
@@ -12,6 +14,8 @@ import { Subscribe } from "./routes/subscribe.ts";
 
 const routeRequest = router([
   [new URLPattern({ pathname: "/" }), Home],
+  [new URLPattern({ pathname: "/blog" }), Blog],
+  [new URLPattern({ pathname: "/blog/:rkey" }), BlogPost],
   [new URLPattern({ pathname: "/menu" }), Menu],
   [new URLPattern({ pathname: "/subscribe" }), Subscribe],
   [new URLPattern({ pathname: "/feed.xml" }), Rss],

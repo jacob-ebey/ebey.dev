@@ -1,0 +1,16 @@
+@import "../../node_modules/highlight.js/styles/atom-one-dark-reasonable.css";
+
+.blog-post {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    img,
+    hr {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+}
