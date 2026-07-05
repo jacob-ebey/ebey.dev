@@ -3,32 +3,32 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 ::selection {
-  background-color: var(--selection-bg);
-  color: inherit;
+    background-color: var(--selection-bg);
+    color: inherit;
 }
 
 html {
-  font-size: 16px;
-  scroll-behavior: smooth;
+    font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
-  /* Core typography setting using JetBrains Mono */
-  font-family: "JetBrains Mono", monospace;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.7;
-  color: var(--text-color);
-  background-color: var(--bg-color);
+    /* Core typography setting using JetBrains Mono */
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--bg-color);
 
-  /* Text rendering optimization */
-  font-smooth: antialiased;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Text rendering optimization */
+    font-smooth: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -37,159 +37,163 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--heading-color);
-  font-weight: 700;
-  line-height: 1.4;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
+    color: var(--heading-color);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: 1.4rem; /* Down from 2.25rem */
-  margin-top: 0;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
+    font-size: 1.4rem; /* Down from 2.25rem */
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: 1.2rem; /* Down from 1.75rem */
-  padding-bottom: 0.2rem;
+    font-size: 1.2rem; /* Down from 1.75rem */
+    padding-bottom: 0.2rem;
 }
 
 h3 {
-  font-size: 1.1rem;
+    font-size: 1.1rem;
 }
 h4,
 h5,
 h6 {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 p {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
 }
 
 a {
-  color: var(--link-color);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 0.2s ease;
+    color: var(--link-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--link-hover);
+    color: var(--link-hover);
 }
 
 strong,
 b {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 em,
 i {
-  font-style: italic;
+    font-style: italic;
 }
 
 small {
-  font-size: 0.875em;
-  opacity: 0.8;
+    font-size: 0.875em;
+    opacity: 0.8;
 }
 
 mark {
-  background-color: var(--mark-bg);
-  color: var(--mark-color);
-  padding: 0.1em 0.3em;
-  border-radius: 2px;
+    background-color: var(--mark-bg);
+    color: var(--mark-color);
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
 }
 
 ul,
 ol {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding-left: 2rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
 }
 
 li {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 blockquote {
-  margin: 2rem 0;
-  padding: 1rem 1.5rem;
-  border-left: 2px solid var(--blockquote-border);
-  background-color: var(--blockquote-bg);
-  font-style: italic;
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 2px solid var(--blockquote-border);
+    background-color: var(--blockquote-bg);
+    font-style: italic;
 }
 
 blockquote p:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 code,
 kbd,
 samp,
 pre {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.9em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.9em;
 }
 
 code {
-  background-color: var(--code-bg);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
+    background-color: var(--code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
 }
 
 pre {
-  background-color: var(--code-bg);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border-radius: 4px;
-  overflow-x: auto;
-  border: 1px solid var(--border-color);
+    background-color: var(--code-bg);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    code {
+        line-height: normal;
+        background-color: unset;
+    }
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 2rem;
-  text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    text-align: left;
 }
 
 th,
 td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 th {
-  font-weight: 700;
-  background-color: var(--code-bg);
+    font-weight: 700;
+    background-color: var(--code-bg);
 }
 
 hr {
-  border: 0;
-  border-top: 1px solid var(--border-color);
-  margin: 4rem 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 4rem 0;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
+    :root {
+        color-scheme: dark;
+    }
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
-  }
+    :root {
+        color-scheme: light;
+    }
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
+    color-scheme: dark;
 }
 
 [data-theme="light"] {
-  color-scheme: light;
+    color-scheme: light;
 }

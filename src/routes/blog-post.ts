@@ -1,11 +1,28 @@
 import type { PubLeafletContent } from "@atcute/leaflet";
+import htmlLang from "@shikijs/langs/html";
+import baseTheme from "@shikijs/themes/one-dark-pro";
 import { html, unsafe, UnsafeHTML } from "enhanceable";
-import hljs from "highlight.js";
 import * as Effect from "mini-effect";
+import { createHighlighterCore } from "shiki/core";
+import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 
 import { Document } from "../components/document.ts";
 import { getBlogPost } from "../lib/atproto.ts";
 import { htmlResponse } from "../lib/response.ts";
+
+const theme = {
+  ...baseTheme,
+  bg: "var(--test)",
+};
+
+const highlighter = await createHighlighterCore({
+  // @ts-expect-error - no types
+  engine: createOnigurumaEngine(import("shiki/onig.wasm")),
+  themes: [theme],
+  langs: [htmlLang],
+});
+
+const supportedLangs = new Set(["html"]);
 
 export const BlogPost = (request: Request, match: URLPatternResult) =>
   Effect.gen(function* () {
@@ -13,6 +30,10 @@ export const BlogPost = (request: Request, match: URLPatternResult) =>
 
     return yield* htmlResponse(html`
         <${Document} ${{ mainLink: "/blog" }}>
+            <meta property="og:title" ${{ content: post.title }} />
+            <meta property="og:description" ${{ content: post.description }} />
+            <link rel="site.standard.document" ${{ href: post.site }} />
+
             <main>
                 <header ${{ style: `view-transition-name: post-header-${post.path.slice(1)}` }}>
                     <h1 ${{ style: `view-transition-name: post-header-title-${post.path.slice(1)}` }}>${post.title}</h1>
@@ -46,7 +67,55 @@ function renderBlocks(
         );
         break;
       case "pub.leaflet.blocks.text":
-        rendered.push(html`<p>${block.block.plaintext}</p>`);
+        if (block.block.facets?.length) {
+          const chunks: Promise<UnsafeHTML>[] = [];
+          let lastEnd = 0;
+          for (const facet of block.block.facets) {
+            chunks.push(
+              html`${block.block.plaintext.slice(
+                lastEnd,
+                facet.index.byteStart,
+              )}`,
+            );
+            for (const feature of facet.features) {
+              switch (feature.$type) {
+                case "pub.leaflet.richtext.facet#link": {
+                  const text = block.block.plaintext.slice(
+                    facet.index.byteStart,
+                    facet.index.byteEnd,
+                  );
+                  chunks.push(html`<a href=${feature.uri}>${text}</a>`);
+                  lastEnd = facet.index.byteEnd;
+                  break;
+                }
+                case "pub.leaflet.richtext.facet#code": {
+                  const text = block.block.plaintext.slice(
+                    facet.index.byteStart,
+                    facet.index.byteEnd,
+                  );
+                  chunks.push(html`<code>${text}</code>`);
+                  lastEnd = facet.index.byteEnd;
+                  break;
+                }
+                default: {
+                  const text = block.block.plaintext.slice(
+                    facet.index.byteStart,
+                    facet.index.byteEnd,
+                  );
+                  chunks.push(html`${text}`);
+                  lastEnd = facet.index.byteEnd;
+                  break;
+                }
+              }
+            }
+          }
+          if (lastEnd < block.block.plaintext.length) {
+            chunks.push(html`${block.block.plaintext.slice(lastEnd)}`);
+          }
+          rendered.push(html`<p>${chunks}</p>`);
+        } else {
+          rendered.push(html`<p>${block.block.plaintext}</p>`);
+        }
         break;
       case "pub.leaflet.blocks.image":
         const link = (block.block.image as { ref?: { $link?: string } })?.ref
@@ -62,16 +131,26 @@ function renderBlocks(
         }
         break;
       case "pub.leaflet.blocks.code":
-        const code = block.block.language
-          ? hljs.highlight(block.block.plaintext, {
-              language: block.block.language,
-            })
-          : hljs.highlightAuto(block.block.plaintext);
-        rendered.push(
-          html`<pre><code>${code.value
-            ? unsafe(code.value)
-            : block.block.plaintext}</code></pre>`,
-        );
+        const text = block.block.plaintext;
+        if (block.block.language && supportedLangs.has(block.block.language)) {
+          const code = highlighter.codeToHtml(block.block.plaintext, {
+            lang: block.block.language as any,
+            theme,
+          });
+          rendered.push(Promise.resolve(unsafe(code)));
+        } else {
+          rendered.push(html`<pre><code>${text}</code></pre>`);
+        }
+        // const code = block.block.language
+        //   ? hljs.highlight(block.block.plaintext, {
+        //       language: block.block.language,
+        //     })
+        //   : hljs.highlightAuto(block.block.plaintext);
+        // rendered.push(
+        //   html`<pre><code>${code.value
+        //     ? unsafe(code.value)
+        //     : block.block.plaintext}</code></pre>`,
+        // );
         break;
       case "pub.leaflet.blocks.horizontalRule":
         rendered.push(html`<hr />`);

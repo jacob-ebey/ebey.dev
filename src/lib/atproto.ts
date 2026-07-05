@@ -3,7 +3,7 @@ import type {} from "@atcute/atproto";
 import type {} from "@atcute/bluesky";
 import type { PubLeafletContent } from "@atcute/leaflet";
 import type {} from "@atcute/standard-site";
-import type { SiteStandardDocument } from "@atcute/standard-site";
+import type {} from "@atcute/standard-site";
 import * as Effect from "mini-effect";
 import * as Schema from "mini-effect/schema";
 
@@ -52,6 +52,7 @@ export const getProjects = Effect.fn(async (signal) => {
   );
 
 const BlogPostSchema = Schema.object({
+  site: Schema.string(),
   path: Schema.string(),
   title: Schema.string(),
   description: Schema.string(),

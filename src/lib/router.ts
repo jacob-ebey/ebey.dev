@@ -27,7 +27,7 @@ export const router =
       const isGetRequest = request.method === "GET";
 
       const cache = yield* Effect.fn(() =>
-        caches.open("router-" + env.CF_VERSION_METADATA.id),
+        caches.open("router-" + env.CF_VERSION_METADATA.timestamp),
       );
       const cacheKey = new URL(url);
       cacheKey.search = "";
