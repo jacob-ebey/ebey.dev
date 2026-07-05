@@ -27,12 +27,12 @@ const supportedLangs = new Set(["html"]);
 export const BlogPost = (request: Request, match: URLPatternResult) =>
   Effect.gen(function* () {
     const post = yield* getBlogPost(match.pathname.groups.rkey);
-
+    console.log(post);
     return yield* htmlResponse(html`
         <${Document} ${{
           description: post.description,
           mainLink: "/blog",
-          standardDocument: post.site,
+          standardDocument: post.uri,
           title: post.title,
         }}>
             <main>

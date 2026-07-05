@@ -52,6 +52,7 @@ export const getProjects = Effect.fn(async (signal) => {
   );
 
 const BlogPostSchema = Schema.object({
+  uri: Schema.string(),
   site: Schema.string(),
   path: Schema.string(),
   title: Schema.string(),
@@ -74,7 +75,10 @@ export const getBlogPosts = Effect.fn(async (signal) => {
     signal,
   });
   if (!res.ok) throw new Error("response not ok");
-  return res.data.records.map((record) => record.value);
+  return res.data.records.map((record) => ({
+    ...record.value,
+    uri: record.uri,
+  }));
 })
   .pipe(Schema.validate(BlogPostsSchema))
   .pipe(
@@ -96,7 +100,7 @@ export const getBlogPost = (rkey: string) =>
       signal,
     });
     if (!res.ok) throw new Error("response not ok");
-    return res.data.value;
+    return { ...res.data.value, uri: res.data.uri };
   })
     .pipe((post) =>
       Effect.gen(function* () {
