@@ -29,11 +29,12 @@ export const BlogPost = (request: Request, match: URLPatternResult) =>
     const post = yield* getBlogPost(match.pathname.groups.rkey);
 
     return yield* htmlResponse(html`
-        <${Document} ${{ mainLink: "/blog" }}>
-            <meta property="og:title" ${{ content: post.title }} />
-            <meta property="og:description" ${{ content: post.description }} />
-            <link rel="site.standard.document" ${{ href: post.site }} />
-
+        <${Document} ${{
+          description: post.description,
+          mainLink: "/blog",
+          standardDocument: post.site,
+          title: post.title,
+        }}>
             <main>
                 <header ${{ style: `view-transition-name: post-header-${post.path.slice(1)}` }}>
                     <h1 ${{ style: `view-transition-name: post-header-title-${post.path.slice(1)}` }}>${post.title}</h1>

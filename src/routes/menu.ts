@@ -5,7 +5,7 @@ import { Document } from "../components/document.ts";
 
 export const Menu = () =>
   htmlResponse(html`
-    <${Document} ${{ menuOpen: true }}>
+      <${Document} ${{ menuOpen: true, title: "Menu" }}>
       <main class="menu">
         <h1 class="sr-only">Menu</h1>
         <nav aria-label="Primary">

@@ -10,7 +10,7 @@ export const Blog = () =>
     const blogPosts = yield* getBlogPosts;
 
     return yield* htmlResponse(html`
-        <${Document}>
+        <${Document} ${{ title: "Blog" }}>
             <main>
                 <h1>Blog</h1>
                 ${blogPosts.map(
