@@ -1,6 +1,7 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import fullstack from "@hiogawa/vite-plugin-fullstack";
-import { defineConfig } from "vite";
+import srvJsx from "srv-jsx/vite";
+import { defineConfig, type PluginOption } from "vite";
 
 export default defineConfig({
   plugins: [
@@ -8,9 +9,22 @@ export default defineConfig({
       serverHandler: false,
       serverEnvironments: ["ssr"],
     }),
+    srvJsx({
+      serverEnvironments: ["ssr"],
+    }) as unknown as PluginOption,
     cloudflare({
       persistState: true,
       viteEnvironment: { name: "ssr" },
     }),
   ],
+  environments: {
+    client: {
+      build: {
+        outDir: "dist/client",
+        rollupOptions: {
+          input: "./src/browser.ts",
+        },
+      },
+    },
+  },
 });

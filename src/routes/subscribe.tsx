@@ -1,20 +1,18 @@
-import { html } from "enhanceable";
-
 import { htmlResponse } from "../lib/response.ts";
-import { Document } from "../components/document.ts";
+import { Document } from "../components/document.tsx";
 
 export const Subscribe = () =>
-  htmlResponse(html`
-    <${Document} ${{ menuOpen: true }}>
+  htmlResponse(
+    <Document menuOpen>
       <main class="menu">
         <h1 class="sr-only">Subscribe</h1>
         <nav aria-label="Primary">
           <ul>
             <li>
-                <a href="/feed.xml">RSS feed</a>
+              <a href="/feed.xml">RSS feed</a>
             </li>
             <li>
-              <a href="/feed.json" >JSON feed</a>
+              <a href="/feed.json">JSON feed</a>
             </li>
           </ul>
         </nav>
@@ -24,8 +22,11 @@ export const Subscribe = () =>
             href="https://blog.jim-nielsen.com/2021/automatically-discoverable-rss-feeds/"
             target="_blank"
             rel="noopener"
-          >automatic feed discovery</a>.
+          >
+            automatic feed discovery
+          </a>
+          .
         </p>
       </main>
-    </${Document}>
-  `);
+    </Document>,
+  );

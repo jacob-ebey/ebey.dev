@@ -1,22 +1,18 @@
-import { html } from "enhanceable";
-
 import { htmlResponse } from "../lib/response.ts";
-import { Document } from "../components/document.ts";
+import { Document } from "../components/document.tsx";
 
 export const Menu = () =>
-  htmlResponse(html`
-      <${Document} ${{ menuOpen: true, title: "Menu" }}>
+  htmlResponse(
+    <Document menuOpen title="Menu">
       <main class="menu">
         <h1 class="sr-only">Menu</h1>
         <nav aria-label="Primary">
           <ul>
             <li>
-                <a href="/">Projects</a>
+              <a href="/">Projects</a>
             </li>
             <li>
-              <a href="/blog">
-                Blog
-              </a>
+              <a href="/blog">Blog</a>
             </li>
           </ul>
         </nav>
@@ -24,7 +20,22 @@ export const Menu = () =>
           <button
             aria-label="System"
             title="System"
-            onclick="(document.startViewTransition?.bind(document) ?? (c => c()))(() => (document.documentElement.removeAttribute('data-theme'), localStorage.removeItem('theme')));"
+            onclick={() => {
+              "use client";
+
+              const doc = globalThis.document as {
+                documentElement: HTMLElement;
+                startViewTransition?: (callback: () => void) => void;
+              };
+              const transition =
+                doc.startViewTransition?.bind(doc) ??
+                ((callback: () => void) => callback());
+
+              transition(() => {
+                doc.documentElement.removeAttribute("data-theme");
+                globalThis.localStorage.removeItem("theme");
+              });
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +53,22 @@ export const Menu = () =>
           <button
             aria-label="Light"
             title="Light"
-            onclick="(document.startViewTransition?.bind(document) ?? (c => c()))(() => (document.documentElement.setAttribute('data-theme', 'light'), localStorage.setItem('theme', 'light')));"
+            onclick={() => {
+              "use client";
+
+              const doc = globalThis.document as {
+                documentElement: HTMLElement;
+                startViewTransition?: (callback: () => void) => void;
+              };
+              const transition =
+                doc.startViewTransition?.bind(doc) ??
+                ((callback: () => void) => callback());
+
+              transition(() => {
+                doc.documentElement.setAttribute("data-theme", "light");
+                globalThis.localStorage.setItem("theme", "light");
+              });
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +86,22 @@ export const Menu = () =>
           <button
             aria-label="Dark"
             title="Dark"
-            onclick="(document.startViewTransition?.bind(document) ?? (c => c()))(() => (document.documentElement.setAttribute('data-theme', 'dark'), localStorage.setItem('theme', 'dark')));"
+            onclick={() => {
+              "use client";
+
+              const doc = globalThis.document as {
+                documentElement: HTMLElement;
+                startViewTransition?: (callback: () => void) => void;
+              };
+              const transition =
+                doc.startViewTransition?.bind(doc) ??
+                ((callback: () => void) => callback());
+
+              transition(() => {
+                doc.documentElement.setAttribute("data-theme", "dark");
+                globalThis.localStorage.setItem("theme", "dark");
+              });
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,5 +118,5 @@ export const Menu = () =>
           </button>
         </aside>
       </main>
-    </${Document}>
-  `);
+    </Document>,
+  );

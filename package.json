@@ -22,9 +22,10 @@
     "@atcute/standard-site": "^2.0.2",
     "@shikijs/langs": "^4.3.1",
     "@shikijs/themes": "^4.3.1",
-    "enhanceable": "~0.0.1",
+    "invokers-polyfill": "^1.0.3",
     "mini-effect": "~0.0.11",
     "shiki": "^4.3.1",
-    "srv-jsx": "0.0.0"
+    "srv-jsx": "0.0.0",
+    "template-for-polyfill": "^0.1.0"
   }
 }
