@@ -4,22 +4,25 @@
   "type": "module",
   "imports": {
     "#build": {
-      "types": "./build.d.ts",
-      "default": "./dist/ssr/server.js"
+      "types": "./src/router.ts",
+      "default": "./dist/ssr/router.js"
     }
   },
   "scripts": {
     "dev": "vp dev",
-    "build": "vp build",
+    "build": "vp build --app",
     "start": "node server.ts"
   },
   "dependencies": {
+    "invokers-polyfill": "^1.0.3",
+    "isbot": "^5.1.44",
     "remix": "3.0.0-beta.5",
     "srv-jsx": "latest",
     "template-for-polyfill": "~0.1.0"
   },
   "devDependencies": {
     "@hiogawa/vite-plugin-fullstack": "~0.0.11",
+    "@tsconfig/vite-react": "^8.0.6",
     "typescript": "^6.0.3",
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
     "vite-plugin-devtools-json": "^1.0.0",

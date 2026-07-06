@@ -42,8 +42,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       srv-jsx:
-        specifier: 0.0.2
-        version: 0.0.2(vite@7.3.6)
+        specifier: 0.0.3
+        version: 0.0.3(vite@7.3.6)
       template-for-polyfill:
         specifier: ^0.1.0
         version: 0.1.0
@@ -841,8 +841,8 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
-  srv-jsx@0.0.2:
-    resolution: {integrity: sha512-7WxK1DORP6iBRd3fz0fFHtILxVS1wK8GnDfg/WFViXGj2XqmMeA0EBUta1OQy6jDyJX4WBldBTfzFJvYH8z5hg==}
+  srv-jsx@0.0.3:
+    resolution: {integrity: sha512-1IX34Oag1vDDl9COts0UxBdJQnwCW6P2qAh2Qt5V1gaYsZy1ypdsy1RXw1uJF+YHCdMnCOWmoW2OpLhm8Fspfg==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -1700,7 +1700,7 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
-  srv-jsx@0.0.2(vite@7.3.6):
+  srv-jsx@0.0.3(vite@7.3.6):
     dependencies:
       magic-string: 0.30.21
     optionalDependencies:

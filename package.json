@@ -26,7 +26,7 @@
     "invokers-polyfill": "^1.0.3",
     "mini-effect": "~0.0.11",
     "shiki": "^4.3.1",
-    "srv-jsx": "0.0.2",
+    "srv-jsx": "0.0.3",
     "template-for-polyfill": "^0.1.0"
   }
 }
