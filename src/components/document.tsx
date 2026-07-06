@@ -1,4 +1,4 @@
-import type { JSXChild, JSXProps } from "srv-jsx";
+import { ErrorBoundary, type JSXChild, type JSXProps } from "srv-jsx";
 
 import { Header } from "./header.tsx";
 
@@ -81,7 +81,15 @@ export function Document({
       </head>
       <body>
         <Header mainLink={mainLink} open={menuOpen} />
-        {children}
+        <ErrorBoundary
+          fallback={
+            <main>
+              <h1>Oops, something went wrong.</h1>
+            </main>
+          }
+        >
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );
