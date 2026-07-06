@@ -5,24 +5,22 @@ import { defineConfig, type PluginOption } from "vite";
 
 export default defineConfig({
   plugins: [
-    fullstack({
-      serverHandler: false,
-      serverEnvironments: ["ssr"],
-    }),
-    srvJsx({
-      serverEnvironments: ["ssr"],
-    }) as unknown as PluginOption,
     cloudflare({
       persistState: true,
       viteEnvironment: { name: "ssr" },
     }),
+    fullstack({
+      serverHandler: false,
+      serverEnvironments: ["ssr"],
+    }),
+    srvJsx() as unknown as PluginOption,
   ],
   environments: {
     client: {
       build: {
         outDir: "dist/client",
         rollupOptions: {
-          input: "./src/browser.ts",
+          input: { index: "./src/browser.ts" },
         },
       },
     },
