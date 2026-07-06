@@ -65,9 +65,6 @@ export function Document({
           <link rel="modulepreload" href={asset.href} />
         ))}
 
-        <link rel="prefetch" href="/menu" />
-        <link rel="prefetch" href="/subscribe" />
-
         <link rel="favicon" href="/favicon.ico" />
         <link
           rel="alternate"
