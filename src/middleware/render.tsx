@@ -6,7 +6,12 @@ export function render() {
   return renderWith(
     ({ request }) =>
       async (root: JSXChild, init?: ResponseInit) => {
+        let status = 200;
         const body = await renderToReadableStream(root, {
+          onError(error) {
+            console.error(error);
+            status = 500;
+          },
           prerender: true,
           signal: request.signal,
         });
@@ -15,6 +20,7 @@ export function render() {
         return createHtmlResponse(body, {
           ...init,
           headers,
+          status,
         });
       },
   );

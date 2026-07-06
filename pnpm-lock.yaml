@@ -251,8 +251,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       srv-jsx:
-        specifier: 0.0.3
-        version: 0.0.3(@voidzero-dev/vite-plus-core@0.2.2(esbuild@0.28.1)(typescript@5.9.3))
+        specifier: 0.0.4
+        version: 0.0.4(@voidzero-dev/vite-plus-core@0.2.2(esbuild@0.28.1)(typescript@5.9.3))
       template-for-polyfill:
         specifier: ^0.1.0
         version: 0.1.0
@@ -2552,8 +2552,8 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
-  srv-jsx@0.0.3:
-    resolution: {integrity: sha512-1IX34Oag1vDDl9COts0UxBdJQnwCW6P2qAh2Qt5V1gaYsZy1ypdsy1RXw1uJF+YHCdMnCOWmoW2OpLhm8Fspfg==}
+  srv-jsx@0.0.4:
+    resolution: {integrity: sha512-IiHV6MSjcmOxS5M4+Tj8T7p8YMFEdoB5jgNmHvgDu2OssJWgkR/RFC1gW+7S8gXyCQElU0XxWa4RUyT76ujwkw==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -4646,7 +4646,7 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
-  srv-jsx@0.0.3(@voidzero-dev/vite-plus-core@0.2.2(esbuild@0.28.1)(typescript@5.9.3)):
+  srv-jsx@0.0.4(@voidzero-dev/vite-plus-core@0.2.2(esbuild@0.28.1)(typescript@5.9.3)):
     dependencies:
       magic-string: 0.30.21
     optionalDependencies:
