@@ -24,7 +24,7 @@ const highlighter = await createHighlighterCore({
   langs: [htmlLang, shellLang, tsxLang],
 });
 
-const supportedLangs = new Set(["html"]);
+const supportedLangs = new Set(["html", "shell", "tsx"]);
 
 export const BlogPost = (request: Request, match: URLPatternResult) =>
   Effect.gen(function* () {
