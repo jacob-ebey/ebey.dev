@@ -1,9 +1,9 @@
 import { createAction } from "remix/fetch-router";
 
-import { Document } from "../components/document.tsx";
-import { getProjects, type Project } from "../lib/atproto.ts";
-import * as npmx from "../lib/npmx.ts";
-import { routes } from "../routes.ts";
+import { Document } from "@/components/document.tsx";
+import { getProjects, type Project } from "@/lib/atproto.ts";
+import * as npmx from "@/lib/npmx.ts";
+import { routes } from "@/routes.ts";
 
 export default createAction(routes.home, async ({ render, request }) => {
   const { maintaining, projects } = await getProjects(request.signal);
@@ -24,15 +24,18 @@ export default createAction(routes.home, async ({ render, request }) => {
         {renderedProjects}
       </main>
     </Document>,
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
+      },
+    },
   );
 });
 
 async function loadAndRender(project: Project, request: Request) {
   const meta =
     project.type === "pkg"
-      ? await npmx
-          .packageMeta(project.name, request.signal)
-          .catch(() => null)
+      ? await npmx.packageMeta(project.name, request.signal).catch(() => null)
       : null;
 
   return (

@@ -5,7 +5,7 @@ import { Header } from "./header.tsx";
 import "../global.css";
 
 import documentAssets from "./document.tsx?assets=ssr";
-import browserAssets from "../browser.ts?assets=client";
+import browserAssets from "@/browser.ts?assets=client";
 
 const assets = documentAssets.merge(browserAssets);
 

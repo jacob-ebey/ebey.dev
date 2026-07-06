@@ -19,9 +19,3 @@ export function render() {
       },
   );
 }
-
-function isBot(userAgent: string | null) {
-  return /\b(bot|crawler|spider|crawling|preview|facebookexternalhit|slurp|bing|duckduckbot)\b/i.test(
-    userAgent ?? "",
-  );
-}

@@ -1,9 +1,9 @@
 import { createAction } from "remix/fetch-router";
 import * as s from "remix/data-schema";
 
-import { getProjects, type Project } from "../lib/atproto.ts";
-import * as npmx from "../lib/npmx.ts";
-import { routes } from "../routes.ts";
+import { getProjects, type Project } from "@/lib/atproto.ts";
+import * as npmx from "@/lib/npmx.ts";
+import { routes } from "@/routes.ts";
 
 const JsonFeedSchema = s.object(
   {
@@ -20,7 +20,9 @@ export default createAction(routes.json, async ({ request }) => {
 
   const renderedProjects = await Promise.all(
     [...projects.maintaining, ...projects.projects]
-      .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+      .sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
+      )
       .map((project) => loadAndRender(project, request)),
   );
 
@@ -33,6 +35,7 @@ export default createAction(routes.json, async ({ request }) => {
     }),
     {
       headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
         "Content-Type": "application/feed+json; charset=utf-8",
       },
     },
@@ -51,9 +54,7 @@ async function getJsonFeed(signal: AbortSignal) {
 async function loadAndRender(project: Project, request: Request) {
   const meta =
     project.type === "pkg"
-      ? await npmx
-          .packageMeta(project.name, request.signal)
-          .catch(() => null)
+      ? await npmx.packageMeta(project.name, request.signal).catch(() => null)
       : null;
 
   return {

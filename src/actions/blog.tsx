@@ -1,8 +1,8 @@
 import { createAction } from "remix/fetch-router";
 
-import { Document } from "../components/document.tsx";
-import { getBlogPosts } from "../lib/atproto.ts";
-import { routes } from "../routes.ts";
+import { Document } from "@/components/document.tsx";
+import { getBlogPosts } from "@/lib/atproto.ts";
+import { routes } from "@/routes.ts";
 
 export default createAction(routes.blog, async ({ render, request }) => {
   const blogPosts = await getBlogPosts(request.signal);
@@ -40,5 +40,10 @@ export default createAction(routes.blog, async ({ render, request }) => {
         })}
       </main>
     </Document>,
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
+      },
+    },
   );
 });

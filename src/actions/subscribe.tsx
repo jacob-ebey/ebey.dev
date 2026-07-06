@@ -1,7 +1,7 @@
 import { createAction } from "remix/fetch-router";
 
-import { Document } from "../components/document.tsx";
-import { routes } from "../routes.ts";
+import { Document } from "@/components/document.tsx";
+import { routes } from "@/routes.ts";
 
 export default createAction(routes.subscribe, ({ render }) =>
   render(
@@ -31,5 +31,10 @@ export default createAction(routes.subscribe, ({ render }) =>
         </p>
       </main>
     </Document>,
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
+      },
+    },
   ),
 );

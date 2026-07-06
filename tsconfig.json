@@ -1,5 +1,6 @@
 {
   "extends": ["@tsconfig/vite-react/tsconfig.json"],
+  "exclude": [".agents"],
   "compilerOptions": {
     "lib": ["DOM", "ES2024"],
     "types": ["@hiogawa/vite-plugin-fullstack/types", "vite/client"],

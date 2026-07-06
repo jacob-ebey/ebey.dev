@@ -8,9 +8,9 @@ import { createHighlighterCore } from "shiki/core";
 import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 import type { JSXChild } from "srv-jsx";
 
-import { Document } from "../components/document.tsx";
-import { getBlogPost } from "../lib/atproto.ts";
-import { routes } from "../routes.ts";
+import { Document } from "@/components/document.tsx";
+import { getBlogPost } from "@/lib/atproto.ts";
+import { routes } from "@/routes.ts";
 
 const theme = {
   ...baseTheme,
@@ -60,6 +60,11 @@ export default createAction(
           </article>
         </main>
       </Document>,
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
+        },
+      },
     );
   },
 );

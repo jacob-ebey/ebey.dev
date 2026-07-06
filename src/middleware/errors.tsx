@@ -2,7 +2,7 @@ import type { Middleware } from "remix/fetch-router";
 import { Renderer } from "remix/middleware/render";
 import type { JSXChild } from "srv-jsx";
 
-import { Document } from "../components/document.tsx";
+import { Document } from "@/components/document.tsx";
 
 type Render = (
   root: JSXChild,

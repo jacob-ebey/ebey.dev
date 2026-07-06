@@ -3,7 +3,7 @@ import type { JSXChild } from "srv-jsx/jsx-runtime";
 import "./document.css";
 
 import serverAssets from "./document.tsx?assets=ssr";
-import browserAssets from "../browser.ts?assets=client";
+import browserAssets from "@/browser.ts?assets=client";
 
 const assets = serverAssets.merge(browserAssets);
 
@@ -16,7 +16,9 @@ export function Document({ children }: { children?: JSXChild }) {
         {assets.css.map((asset) => (
           <link nonce rel="stylesheet" href={asset.href} />
         ))}
-        {assets.entry ? <script nonce async type="module" src={assets.entry} /> : null}
+        {assets.entry ? (
+          <script nonce async type="module" src={assets.entry} />
+        ) : null}
         {assets.js.map((asset) => (
           <link nonce rel="modulepreload" href={asset.href} />
         ))}

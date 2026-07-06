@@ -1,13 +1,12 @@
 import type { Route } from "remix/fetch-router/routes";
 import { createRouter, type Action, type Router } from "remix/fetch-router";
 
-import { cache } from "./middleware/cache.ts";
 import { errors } from "./middleware/errors.tsx";
 import { render } from "./middleware/render.tsx";
 import { routes } from "./routes.ts";
 
 const router = createRouter({
-  middleware: [errors(), render(), cache()],
+  middleware: [errors(), render()],
 });
 
 declare module "remix/fetch-router" {
