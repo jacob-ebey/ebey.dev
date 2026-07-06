@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "srv-jsx": {
+      "source": "jacob-ebey/srv-jsx",
+      "sourceType": "github",
+      "skillPath": "skills/srv-jsx/SKILL.md",
+      "computedHash": "a2eec27417bc4689170eeb229c3dc04c7b32b2fea8b4ac29484e39af222cd2b5"
+    }
+  }
+}

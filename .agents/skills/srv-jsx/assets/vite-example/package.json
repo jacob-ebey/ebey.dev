@@ -1,0 +1,29 @@
+{
+  "name": "srv-jsx-vite-example",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#build": {
+      "types": "./build.d.ts",
+      "default": "./dist/ssr/server.js"
+    }
+  },
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "start": "node server.ts"
+  },
+  "dependencies": {
+    "remix": "3.0.0-beta.5",
+    "srv-jsx": "latest",
+    "template-for-polyfill": "~0.1.0"
+  },
+  "devDependencies": {
+    "@hiogawa/vite-plugin-fullstack": "~0.0.11",
+    "typescript": "^6.0.3",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plugin-devtools-json": "^1.0.0",
+    "vite-plus": "latest",
+    "vitest": "4.1.9"
+  }
+}

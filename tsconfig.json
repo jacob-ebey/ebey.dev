@@ -1,4 +1,5 @@
 {
+  "exclude": ["skills"],
   "compilerOptions": {
     "lib": ["ES2024", "DOM"],
     "types": ["@hiogawa/vite-plugin-fullstack/types", "vite/client"],
