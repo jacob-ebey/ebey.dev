@@ -1,8 +1,10 @@
-import { htmlResponse } from "../lib/response.ts";
-import { Document } from "../components/document.tsx";
+import { createAction } from "remix/fetch-router";
 
-export const Menu = () =>
-  htmlResponse(
+import { Document } from "../components/document.tsx";
+import { routes } from "../routes.ts";
+
+export default createAction(routes.menu, ({ render }) =>
+  render(
     <Document menuOpen title="Menu">
       <main class="menu">
         <h1 class="sr-only">Menu</h1>
@@ -119,4 +121,5 @@ export const Menu = () =>
         </aside>
       </main>
     </Document>,
-  );
+  ),
+);

@@ -20,7 +20,6 @@ function areInvokerCommandsSupported() {
 
 function installPolyfills() {
   if (!areProcessingDirectivesSupported()) {
-    // @ts-expect-error - package does not ship TypeScript declarations.
     void import("template-for-polyfill").catch(console.error.bind(console));
   }
 

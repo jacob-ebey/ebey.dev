@@ -3,9 +3,7 @@ import type {} from "@atcute/atproto";
 import type {} from "@atcute/bluesky";
 import type { PubLeafletContent } from "@atcute/leaflet";
 import type {} from "@atcute/standard-site";
-import type {} from "@atcute/standard-site";
-import * as Effect from "mini-effect";
-import * as Schema from "mini-effect/schema";
+import * as s from "remix/data-schema";
 
 export const pds = new Client({
   handler: simpleFetchHandler({
@@ -13,26 +11,24 @@ export const pds = new Client({
   }),
 });
 
-const ProjectSchema = Schema.object({
-  type: Schema.union([Schema.literal("pkg"), Schema.literal("site")]),
-  name: Schema.string(),
-  link: Schema.string(),
-  created: Schema.string(),
-  description: Schema.optional(Schema.string()),
+const ProjectSchema = s.object({
+  type: s.enum_(["pkg", "site"]),
+  name: s.string(),
+  link: s.string(),
+  created: s.string(),
+  description: s.optional(s.string()),
 });
 
-const ProjectsSchema = Schema.object({
-  maintaining: Schema.array(ProjectSchema),
-  projects: Schema.array(ProjectSchema),
+const ProjectsSchema = s.object({
+  maintaining: s.array(ProjectSchema),
+  projects: s.array(ProjectSchema),
 });
 
-export type Project = Schema.InferOutput<typeof ProjectSchema>;
+export type Project = s.InferOutput<typeof ProjectSchema>;
 
-export type Projects = Schema.InferOutput<typeof ProjectsSchema>;
+export type Projects = s.InferOutput<typeof ProjectsSchema>;
 
-const FailedToGetProjects = Effect.failure("FailedToGetProjects");
-
-export const getProjects = Effect.fn(async (signal) => {
+export async function getProjects(signal?: AbortSignal) {
   const res = await pds.get("com.atproto.repo.getRecord", {
     params: {
       collection: "dev.ebey.random",
@@ -42,31 +38,34 @@ export const getProjects = Effect.fn(async (signal) => {
     signal,
   });
   if (!res.ok) throw new Error("response not ok");
-  return res.data.value;
-})
-  .pipe(Schema.validate(ProjectsSchema))
-  .pipe(
-    Effect.catchSome((cause) =>
-      Effect.fail(new FailedToGetProjects({ cause })),
-    ),
-  );
+  return s.parse(ProjectsSchema, res.data.value);
+}
 
-const BlogPostSchema = Schema.object({
-  uri: Schema.string(),
-  site: Schema.string(),
-  path: Schema.string(),
-  title: Schema.string(),
-  description: Schema.string(),
-  publishedAt: Schema.string(),
+const BlogPostSchema = s.object({
+  uri: s.string(),
+  site: s.string(),
+  path: s.string(),
+  title: s.string(),
+  description: s.string(),
+  publishedAt: s.string(),
 });
 
-const BlogPostsSchema = Schema.array(BlogPostSchema);
+const BlogPostWithContentSchema = s.object({
+  uri: s.string(),
+  site: s.string(),
+  path: s.string(),
+  title: s.string(),
+  description: s.string(),
+  publishedAt: s.string(),
+  content: s
+    .any()
+    .refine((value) => value !== undefined, "Expected content")
+    .transform((value) => value as PubLeafletContent.Main),
+});
 
-export type BlogPost = Schema.InferOutput<typeof BlogPostSchema>;
+export type BlogPost = s.InferOutput<typeof BlogPostSchema>;
 
-const FailedToGetBlogPosts = Effect.failure("FailedToGetBlogPosts");
-
-export const getBlogPosts = Effect.fn(async (signal) => {
+export async function getBlogPosts(signal?: AbortSignal) {
   const res = await pds.get("com.atproto.repo.listRecords", {
     params: {
       collection: "site.standard.document",
@@ -75,41 +74,27 @@ export const getBlogPosts = Effect.fn(async (signal) => {
     signal,
   });
   if (!res.ok) throw new Error("response not ok");
-  return res.data.records.map((record) => ({
-    ...record.value,
-    uri: record.uri,
-  }));
-})
-  .pipe(Schema.validate(BlogPostsSchema))
-  .pipe(
-    Effect.catchSome((cause) =>
-      Effect.fail(new FailedToGetBlogPosts({ cause })),
-    ),
+  return res.data.records.map((record) =>
+    s.parse(BlogPostSchema, {
+      ...record.value,
+      uri: record.uri,
+    }),
   );
+}
 
-const FailedToGetBlogPost = Effect.failure("FailedToGetBlogPost");
+export async function getBlogPost(rkey: string, signal?: AbortSignal) {
+  const res = await pds.get("com.atproto.repo.getRecord", {
+    params: {
+      collection: "site.standard.document",
+      repo: "ebey.dev",
+      rkey,
+    },
+    signal,
+  });
+  if (!res.ok) throw new Error("response not ok");
 
-export const getBlogPost = (rkey: string) =>
-  Effect.fn(async (signal) => {
-    const res = await pds.get("com.atproto.repo.getRecord", {
-      params: {
-        collection: "site.standard.document",
-        repo: "ebey.dev",
-        rkey,
-      },
-      signal,
-    });
-    if (!res.ok) throw new Error("response not ok");
-    return { ...res.data.value, uri: res.data.uri };
-  })
-    .pipe((post) =>
-      Effect.gen(function* () {
-        yield* Schema.validate(BlogPostSchema)(post);
-        return post as BlogPost & { content: PubLeafletContent.Main };
-      }),
-    )
-    .pipe(
-      Effect.catchSome((cause) =>
-        Effect.fail(new FailedToGetBlogPost({ cause })),
-      ),
-    );
+  return s.parse(BlogPostWithContentSchema, {
+    ...res.data.value,
+    uri: res.data.uri,
+  });
+}

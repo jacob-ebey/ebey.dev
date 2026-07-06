@@ -1,7 +1,7 @@
 {
   "name": "ebey_dev",
   "workers_dev": true,
-  "main": "src/worker.tsx",
+  "main": "src/router.ts",
   "compatibility_date": "2026-02-16",
   "compatibility_flags": ["nodejs_compat"],
   "version_metadata": {

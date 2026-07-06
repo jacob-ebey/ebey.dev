@@ -3,14 +3,14 @@ import htmlLang from "@shikijs/langs/html";
 import shellLang from "@shikijs/langs/shell";
 import tsxLang from "@shikijs/langs/tsx";
 import baseTheme from "@shikijs/themes/one-dark-pro";
-import * as Effect from "mini-effect";
+import { createAction } from "remix/fetch-router";
 import { createHighlighterCore } from "shiki/core";
 import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 import type { JSXChild } from "srv-jsx";
 
 import { Document } from "../components/document.tsx";
 import { getBlogPost } from "../lib/atproto.ts";
-import { htmlResponse } from "../lib/response.ts";
+import { routes } from "../routes.ts";
 
 const theme = {
   ...baseTheme,
@@ -26,12 +26,13 @@ const highlighter = await createHighlighterCore({
 
 const supportedLangs = new Set(["html", "shell", "tsx"]);
 
-export const BlogPost = (request: Request, match: URLPatternResult) =>
-  Effect.gen(function* () {
-    const post = yield* getBlogPost(match.pathname.groups.rkey);
+export default createAction(
+  routes["blog-post"],
+  async ({ params, render, request }) => {
+    const post = await getBlogPost(params.rkey, request.signal);
     const slug = post.path.slice(1);
 
-    return yield* htmlResponse(
+    return render(
       <Document
         description={post.description}
         mainLink="/blog"
@@ -60,7 +61,8 @@ export const BlogPost = (request: Request, match: URLPatternResult) =>
         </main>
       </Document>,
     );
-  });
+  },
+);
 
 function renderBlocks(
   blocks: PubLeafletContent.Main["pages"][number]["blocks"],
@@ -122,7 +124,7 @@ function renderBlocks(
           rendered.push(<p>{block.block.plaintext}</p>);
         }
         break;
-      case "pub.leaflet.blocks.image":
+      case "pub.leaflet.blocks.image": {
         const link = (block.block.image as { ref?: { $link?: string } })?.ref
           ?.$link;
         if (link) {
@@ -133,7 +135,8 @@ function renderBlocks(
           );
         }
         break;
-      case "pub.leaflet.blocks.code":
+      }
+      case "pub.leaflet.blocks.code": {
         const text = block.block.plaintext;
         if (block.block.language && supportedLangs.has(block.block.language)) {
           const code = highlighter.codeToHtml(block.block.plaintext, {
@@ -149,6 +152,7 @@ function renderBlocks(
           );
         }
         break;
+      }
       case "pub.leaflet.blocks.horizontalRule":
         rendered.push(<hr />);
         break;

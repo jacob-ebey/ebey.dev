@@ -1,17 +1,13 @@
 {
-  "exclude": ["skills"],
+  "extends": ["@tsconfig/vite-react/tsconfig.json"],
   "compilerOptions": {
-    "lib": ["ES2024", "DOM"],
+    "lib": ["DOM", "ES2024"],
     "types": ["@hiogawa/vite-plugin-fullstack/types", "vite/client"],
-    "target": "ES2024",
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
     "jsx": "react-jsx",
     "jsxImportSource": "srv-jsx",
-    "verbatimModuleSyntax": true,
-    "allowImportingTsExtensions": true,
-    "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
+    "paths": {
+      "@/*": ["./src/*"],
+    },
   },
 }

@@ -5,11 +5,11 @@ import { defineConfig, type PluginOption } from "vite";
 
 export default defineConfig({
   plugins: [
-    srvJsx() as unknown as PluginOption,
     fullstack({
       serverHandler: false,
       serverEnvironments: ["ssr"],
     }),
+    srvJsx() as unknown as PluginOption,
     cloudflare({
       persistState: true,
       viteEnvironment: { name: "ssr" },
@@ -24,5 +24,17 @@ export default defineConfig({
         },
       },
     },
+    ssr: {
+      build: {
+        emitAssets: true,
+        outDir: "dist/ssr",
+        rollupOptions: {
+          input: { index: "./src/router.ts" },
+        },
+      },
+    },
+  },
+  resolve: {
+    tsconfigPaths: true,
   },
 });

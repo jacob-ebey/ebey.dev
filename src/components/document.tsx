@@ -56,13 +56,13 @@ export function Document({
           rel="stylesheet"
         />
         {assets.css.map((asset: { href: string }) => (
-          <link rel="stylesheet" href={asset.href} />
+          <link nonce rel="stylesheet" href={asset.href} />
         ))}
         {assets.entry ? (
-          <script type="module" src={assets.entry}></script>
+          <script nonce async type="module" src={assets.entry}></script>
         ) : null}
         {assets.js.map((asset: { href: string }) => (
-          <link rel="modulepreload" href={asset.href} />
+          <link nonce rel="modulepreload" href={asset.href} />
         ))}
 
         <link rel="favicon" href="/favicon.ico" />

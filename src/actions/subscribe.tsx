@@ -1,8 +1,10 @@
-import { htmlResponse } from "../lib/response.ts";
-import { Document } from "../components/document.tsx";
+import { createAction } from "remix/fetch-router";
 
-export const Subscribe = () =>
-  htmlResponse(
+import { Document } from "../components/document.tsx";
+import { routes } from "../routes.ts";
+
+export default createAction(routes.subscribe, ({ render }) =>
+  render(
     <Document menuOpen>
       <main class="menu">
         <h1 class="sr-only">Subscribe</h1>
@@ -17,7 +19,7 @@ export const Subscribe = () =>
           </ul>
         </nav>
         <p>
-          Or simply copy/paste this page’s URL into your feed reader for
+          Or simply copy/paste this page's URL into your feed reader for
           <a
             href="https://blog.jim-nielsen.com/2021/automatically-discoverable-rss-feeds/"
             target="_blank"
@@ -29,4 +31,5 @@ export const Subscribe = () =>
         </p>
       </main>
     </Document>,
-  );
+  ),
+);
