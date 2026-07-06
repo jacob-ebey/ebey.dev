@@ -5,15 +5,15 @@ import { defineConfig, type PluginOption } from "vite";
 
 export default defineConfig({
   plugins: [
-    cloudflare({
-      persistState: true,
-      viteEnvironment: { name: "ssr" },
-    }),
+    srvJsx() as unknown as PluginOption,
     fullstack({
       serverHandler: false,
       serverEnvironments: ["ssr"],
     }),
-    srvJsx() as unknown as PluginOption,
+    cloudflare({
+      persistState: true,
+      viteEnvironment: { name: "ssr" },
+    }),
   ],
   environments: {
     client: {
