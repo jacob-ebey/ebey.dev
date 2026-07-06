@@ -1,5 +1,7 @@
 import type { PubLeafletContent } from "@atcute/leaflet";
 import htmlLang from "@shikijs/langs/html";
+import shellLang from "@shikijs/langs/shell";
+import tsxLang from "@shikijs/langs/tsx";
 import baseTheme from "@shikijs/themes/one-dark-pro";
 import * as Effect from "mini-effect";
 import { createHighlighterCore } from "shiki/core";
@@ -19,7 +21,7 @@ const highlighter = await createHighlighterCore({
   // @ts-expect-error - no types
   engine: createOnigurumaEngine(import("shiki/onig.wasm")),
   themes: [theme],
-  langs: [htmlLang],
+  langs: [htmlLang, shellLang, tsxLang],
 });
 
 const supportedLangs = new Set(["html"]);
@@ -77,7 +79,9 @@ function renderBlocks(
           const chunks: JSXChild[] = [];
           let lastEnd = 0;
           for (const facet of block.block.facets) {
-            chunks.push(block.block.plaintext.slice(lastEnd, facet.index.byteStart));
+            chunks.push(
+              block.block.plaintext.slice(lastEnd, facet.index.byteStart),
+            );
             for (const feature of facet.features) {
               switch (feature.$type) {
                 case "pub.leaflet.richtext.facet#link": {
