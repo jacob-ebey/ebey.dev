@@ -15,6 +15,7 @@ export function Document({
   mainLink,
   menuOpen,
   standardDocument,
+  standardPublication,
   title,
 }: {
   children?: JSXChild;
@@ -22,6 +23,7 @@ export function Document({
   mainLink?: string;
   menuOpen?: boolean;
   standardDocument?: string;
+  standardPublication?: string;
   title?: string;
 } & JSXProps) {
   const pageTitle = title ? `${title} | ebey.dev` : "ebey.dev";
@@ -37,6 +39,9 @@ export function Document({
         <meta name="description" content={pageDescription} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
+        {standardPublication ? (
+          <link rel="site.standard.publication" href={standardPublication} />
+        ) : null}
         {standardDocument ? (
           <>
             <link rel="alternate" href={standardDocument} />
@@ -77,6 +82,9 @@ export function Document({
           type="application/feed+json"
           href="/feed.json"
           title="RSS Feed"
+        />
+        <script
+          innerHTML={`(()=>{let theme=localStorage.getItem("theme");(typeof theme==="string"?document.documentElement.setAttribute("data-theme", theme):document.documentElement.removeAttribute("data-theme"));})()`}
         />
       </head>
       <body>

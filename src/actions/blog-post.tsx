@@ -37,6 +37,7 @@ export default createAction(
         description={post.description}
         mainLink="/blog"
         standardDocument={post.uri}
+        standardPublication={post.site}
         title={post.title}
       >
         <main>

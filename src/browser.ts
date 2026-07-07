@@ -28,16 +28,4 @@ function installPolyfills() {
   }
 }
 
-function applyStoredTheme() {
-  const theme = localStorage.getItem("theme");
-
-  if (theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-  }
-}
-
 installPolyfills();
-applyStoredTheme();
-window.addEventListener("pageshow", applyStoredTheme);
