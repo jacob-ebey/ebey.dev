@@ -7,24 +7,24 @@
     "preview": "vp preview"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.43.0",
+    "@cloudflare/vite-plugin": "^1.45.0",
     "@hiogawa/vite-plugin-fullstack": "~0.0.11",
-    "@tsconfig/vite-react": "^8.0.6",
+    "@tsconfig/vite-react": "^8.1.1",
     "@typescript/native-preview": "7.0.0-dev.20260509.2",
     "oxfmt": "~0.57.0",
-    "oxlint": "^1.72.0",
+    "oxlint": "^1.74.0",
     "typescript": "^5.9.3",
-    "vite": "catalog:",
+    "vite": "npm:@voidzero-dev/vite-plus-core@^0.2.4",
     "vite-plugin-devtools-json": "^1.0.0",
     "vite-plus": "catalog:",
-    "wrangler": "^4.107.0"
+    "wrangler": "^4.111.0"
   },
   "dependencies": {
     "@atcute/atproto": "^4.0.3",
-    "@atcute/bluesky": "^4.0.13",
+    "@atcute/bluesky": "^4.0.14",
     "@atcute/client": "^5.1.1",
-    "@atcute/leaflet": "^2.0.9",
-    "@atcute/lexicons": "^2.0.2",
+    "@atcute/leaflet": "^2.0.10",
+    "@atcute/lexicons": "^2.0.3",
     "@atcute/standard-site": "^2.0.2",
     "@shikijs/langs": "^4.3.1",
     "@shikijs/themes": "^4.3.1",
@@ -32,12 +32,12 @@
     "remix": "3.0.0-beta.5",
     "shiki": "^4.3.1",
     "srv-jsx": "0.0.4",
-    "template-for-polyfill": "^0.1.0"
+    "template-for-polyfill": "^0.1.1"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.10.0",
+      "version": "11.13.1",
       "onFail": "download"
     }
   }

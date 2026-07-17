@@ -2,10 +2,12 @@ allowBuilds:
   esbuild: false
   sharp: false
   workerd: false
+catalogMode: strict
+cleanupUnusedCatalogs: true
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: 4.1.9
-  vite-plus: latest
+  vite-plus: 0.2.4
 minimumReleaseAgeExclude:
   - srv-jsx@0.0.4
 overrides:
