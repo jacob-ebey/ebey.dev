@@ -1,6 +1,7 @@
 import type { PubLeafletContent } from "@atcute/leaflet";
 import htmlLang from "@shikijs/langs/html";
 import shellLang from "@shikijs/langs/shell";
+import yamlLang from "@shikijs/langs/yaml";
 import tsxLang from "@shikijs/langs/tsx";
 import baseTheme from "@shikijs/themes/one-dark-pro";
 import { createAction } from "remix/fetch-router";
@@ -21,7 +22,7 @@ const highlighter = await createHighlighterCore({
   // @ts-expect-error - no types
   engine: createOnigurumaEngine(import("shiki/onig.wasm")),
   themes: [theme],
-  langs: [htmlLang, shellLang, tsxLang],
+  langs: [htmlLang, shellLang, tsxLang, yamlLang],
 });
 
 const supportedLangs = new Set(["html", "shell", "tsx"]);

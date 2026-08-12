@@ -6,7 +6,7 @@ export function render() {
   return renderWith(
     ({ request }) =>
       async (root: JSXChild, init?: ResponseInit) => {
-        let status = 200;
+        let status = init?.status ?? 200;
         const body = await renderToReadableStream(root, {
           onError(error) {
             console.error(error);
