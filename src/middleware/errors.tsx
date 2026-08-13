@@ -4,10 +4,7 @@ import type { JSXChild } from "srv-jsx";
 
 import { Document } from "@/components/document.tsx";
 
-type Render = (
-  root: JSXChild,
-  init?: ResponseInit,
-) => Response | Promise<Response>;
+type Render = (root: JSXChild, init?: ResponseInit) => Response | Promise<Response>;
 
 export function errors(): Middleware {
   return async (context, next) => {
@@ -25,10 +22,7 @@ export function errors(): Middleware {
         <Document>
           <main>
             <h1>500 Internal Server Error</h1>
-            <p>
-              Something went wrong while processing your request. Please try
-              again later.
-            </p>
+            <p>Something went wrong while processing your request. Please try again later.</p>
           </main>
         </Document>,
         { status: 500 },

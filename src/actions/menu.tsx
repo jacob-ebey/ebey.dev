@@ -30,8 +30,7 @@ export default createAction(routes.menu, ({ render }) =>
                 startViewTransition?: (callback: () => void) => void;
               };
               const transition =
-                doc.startViewTransition?.bind(doc) ??
-                ((callback: () => void) => callback());
+                doc.startViewTransition?.bind(doc) ?? ((callback: () => void) => callback());
 
               transition(() => {
                 doc.documentElement.removeAttribute("data-theme");
@@ -39,11 +38,7 @@ export default createAction(routes.menu, ({ render }) =>
               });
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -63,8 +58,7 @@ export default createAction(routes.menu, ({ render }) =>
                 startViewTransition?: (callback: () => void) => void;
               };
               const transition =
-                doc.startViewTransition?.bind(doc) ??
-                ((callback: () => void) => callback());
+                doc.startViewTransition?.bind(doc) ?? ((callback: () => void) => callback());
 
               transition(() => {
                 doc.documentElement.setAttribute("data-theme", "light");
@@ -72,11 +66,7 @@ export default createAction(routes.menu, ({ render }) =>
               });
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -96,8 +86,7 @@ export default createAction(routes.menu, ({ render }) =>
                 startViewTransition?: (callback: () => void) => void;
               };
               const transition =
-                doc.startViewTransition?.bind(doc) ??
-                ((callback: () => void) => callback());
+                doc.startViewTransition?.bind(doc) ?? ((callback: () => void) => callback());
 
               transition(() => {
                 doc.documentElement.setAttribute("data-theme", "dark");
@@ -105,11 +94,7 @@ export default createAction(routes.menu, ({ render }) =>
               });
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"

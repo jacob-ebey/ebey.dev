@@ -16,9 +16,7 @@ export function Document({ children }: { children?: JSXChild }) {
         {assets.css.map((asset) => (
           <link nonce rel="stylesheet" href={asset.href} />
         ))}
-        {assets.entry ? (
-          <script nonce async type="module" src={assets.entry} />
-        ) : null}
+        {assets.entry ? <script nonce async type="module" src={assets.entry} /> : null}
         {assets.js.map((asset) => (
           <link nonce rel="modulepreload" href={asset.href} />
         ))}

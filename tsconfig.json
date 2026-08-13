@@ -8,7 +8,7 @@
     "jsxImportSource": "srv-jsx",
     "noEmit": true,
     "paths": {
-      "@/*": ["./src/*"],
-    },
-  },
+      "@/*": ["./src/*"]
+    }
+  }
 }

@@ -1,7 +1,4 @@
-import type {
-  PubLeafletContent,
-  PubLeafletRichtextFacet,
-} from "@atcute/leaflet";
+import type { PubLeafletContent, PubLeafletRichtextFacet } from "@atcute/leaflet";
 import htmlLang from "@shikijs/langs/html";
 import shellLang from "@shikijs/langs/shell";
 import yamlLang from "@shikijs/langs/yaml";
@@ -30,53 +27,44 @@ const highlighter = await createHighlighterCore({
 
 const supportedLangs = new Set(["html", "shell", "shellscript", "tsx", "yaml"]);
 
-export default createAction(
-  routes["blog-post"],
-  async ({ params, render, request }) => {
-    const post = await getBlogPost(params.rkey, request.signal);
-    const slug = post.path.slice(1);
+export default createAction(routes["blog-post"], async ({ params, render, request }) => {
+  const post = await getBlogPost(params.rkey, request.signal);
+  const slug = post.path.slice(1);
 
-    return render(
-      <Document
-        description={post.description}
-        mainLink="/blog"
-        standardDocument={post.uri}
-        standardPublication={post.site}
-        title={post.title}
-      >
-        <main>
-          <header style={`view-transition-name: post-header-${slug}`}>
-            <h1 style={`view-transition-name: post-header-title-${slug}`}>
-              {post.title}
-            </h1>
-            <time
-              datetime={post.publishedAt}
-              style={`view-transition-name: post-header-time-${slug}`}
-            >
-              {Intl.DateTimeFormat("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }).format(new Date(post.publishedAt))}
-            </time>
-          </header>
-          <article class="blog-post">
-            {renderBlocks(post.content.pages[0].blocks)}
-          </article>
-        </main>
-      </Document>,
-      {
-        headers: {
-          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
-        },
+  return render(
+    <Document
+      description={post.description}
+      mainLink="/blog"
+      standardDocument={post.uri}
+      standardPublication={post.site}
+      title={post.title}
+    >
+      <main>
+        <header style={`view-transition-name: post-header-${slug}`}>
+          <h1 style={`view-transition-name: post-header-title-${slug}`}>{post.title}</h1>
+          <time
+            datetime={post.publishedAt}
+            style={`view-transition-name: post-header-time-${slug}`}
+          >
+            {Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }).format(new Date(post.publishedAt))}
+          </time>
+        </header>
+        <article class="blog-post">{renderBlocks(post.content.pages[0].blocks)}</article>
+      </main>
+    </Document>,
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=240",
       },
-    );
-  },
-);
+    },
+  );
+});
 
-function renderBlocks(
-  blocks: PubLeafletContent.Main["pages"][number]["blocks"],
-) {
+function renderBlocks(blocks: PubLeafletContent.Main["pages"][number]["blocks"]) {
   const rendered: JSXChild[] = [];
 
   for (const block of blocks) {
@@ -84,20 +72,15 @@ function renderBlocks(
       case "pub.leaflet.blocks.header": {
         const Heading = headingTag(block.block.level);
         rendered.push(
-          <Heading>
-            {renderRichText(block.block.plaintext, block.block.facets)}
-          </Heading>,
+          <Heading>{renderRichText(block.block.plaintext, block.block.facets)}</Heading>,
         );
         break;
       }
       case "pub.leaflet.blocks.text":
-        rendered.push(
-          <p>{renderRichText(block.block.plaintext, block.block.facets)}</p>,
-        );
+        rendered.push(<p>{renderRichText(block.block.plaintext, block.block.facets)}</p>);
         break;
       case "pub.leaflet.blocks.image": {
-        const link = (block.block.image as { ref?: { $link?: string } })?.ref
-          ?.$link;
+        const link = (block.block.image as { ref?: { $link?: string } })?.ref?.$link;
         if (link) {
           rendered.push(
             <img
@@ -231,14 +214,7 @@ function codeUnitIndexAtByte(text: string, byteIndex: number): number {
       return codePos;
     }
     const codePoint = char.codePointAt(0)!;
-    bytePos +=
-      codePoint < 0x80
-        ? 1
-        : codePoint < 0x800
-          ? 2
-          : codePoint < 0x10000
-            ? 3
-            : 4;
+    bytePos += codePoint < 0x80 ? 1 : codePoint < 0x800 ? 2 : codePoint < 0x10000 ? 3 : 4;
     if (bytePos > byteIndex) {
       return codePos;
     }

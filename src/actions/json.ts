@@ -20,9 +20,7 @@ export default createAction(routes.json, async ({ request }) => {
 
   const renderedProjects = await Promise.all(
     [...projects.maintaining, ...projects.projects]
-      .sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
-      )
+      .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
       .map((project) => loadAndRender(project, request)),
   );
 

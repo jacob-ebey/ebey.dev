@@ -63,26 +63,14 @@ export function Document({
         {assets.css.map((asset: { href: string }) => (
           <link nonce rel="stylesheet" href={asset.href} />
         ))}
-        {assets.entry ? (
-          <script nonce async type="module" src={assets.entry}></script>
-        ) : null}
+        {assets.entry ? <script nonce async type="module" src={assets.entry}></script> : null}
         {assets.js.map((asset: { href: string }) => (
           <link nonce rel="modulepreload" href={asset.href} />
         ))}
 
         <link rel="favicon" href="/favicon.ico" />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          href="/feed.xml"
-          title="RSS Feed"
-        />
-        <link
-          rel="alternate"
-          type="application/feed+json"
-          href="/feed.json"
-          title="RSS Feed"
-        />
+        <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="RSS Feed" />
+        <link rel="alternate" type="application/feed+json" href="/feed.json" title="RSS Feed" />
         <script
           innerHTML={`(()=>{let theme=localStorage.getItem("theme");(typeof theme==="string"?document.documentElement.setAttribute("data-theme", theme):document.documentElement.removeAttribute("data-theme"));})()`}
         />

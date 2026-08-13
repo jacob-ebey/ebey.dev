@@ -3,25 +3,22 @@ import { createHtmlResponse } from "remix/response/html";
 import { renderToReadableStream, type JSXChild } from "srv-jsx";
 
 export function render() {
-  return renderWith(
-    ({ request }) =>
-      async (root: JSXChild, init?: ResponseInit) => {
-        let status = init?.status ?? 200;
-        const body = await renderToReadableStream(root, {
-          onError(error) {
-            console.error(error);
-            status = 500;
-          },
-          prerender: true,
-          signal: request.signal,
-        });
-        const headers = new Headers(init?.headers);
-
-        return createHtmlResponse(body, {
-          ...init,
-          headers,
-          status,
-        });
+  return renderWith(({ request }) => async (root: JSXChild, init?: ResponseInit) => {
+    let status = init?.status ?? 200;
+    const body = await renderToReadableStream(root, {
+      onError(error) {
+        console.error(error);
+        status = 500;
       },
-  );
+      prerender: true,
+      signal: request.signal,
+    });
+    const headers = new Headers(init?.headers);
+
+    return createHtmlResponse(body, {
+      ...init,
+      headers,
+      status,
+    });
+  });
 }

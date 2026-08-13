@@ -17,12 +17,8 @@ declare module "remix/fetch-router" {
 
 const actionModules = Object.assign(
   {},
-  import.meta.glob<true, string, () => Promise<{ default: Action<any> }>>(
-    "./actions/**/*.ts",
-  ),
-  import.meta.glob<true, string, () => Promise<{ default: Action<any> }>>(
-    "./actions/**/*.tsx",
-  ),
+  import.meta.glob<true, string, () => Promise<{ default: Action<any> }>>("./actions/**/*.ts"),
+  import.meta.glob<true, string, () => Promise<{ default: Action<any> }>>("./actions/**/*.tsx"),
 );
 
 for (const [filepath, loadMod] of Object.entries(actionModules)) {
