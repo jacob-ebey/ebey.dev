@@ -1,4 +1,7 @@
-import type { PubLeafletContent } from "@atcute/leaflet";
+import type {
+  PubLeafletContent,
+  PubLeafletRichtextFacet,
+} from "@atcute/leaflet";
 import htmlLang from "@shikijs/langs/html";
 import shellLang from "@shikijs/langs/shell";
 import yamlLang from "@shikijs/langs/yaml";
@@ -25,7 +28,7 @@ const highlighter = await createHighlighterCore({
   langs: [htmlLang, shellLang, tsxLang, yamlLang],
 });
 
-const supportedLangs = new Set(["html", "shell", "tsx"]);
+const supportedLangs = new Set(["html", "shell", "shellscript", "tsx", "yaml"]);
 
 export default createAction(
   routes["blog-post"],
@@ -80,56 +83,17 @@ function renderBlocks(
     switch (block.block.$type) {
       case "pub.leaflet.blocks.header": {
         const Heading = headingTag(block.block.level);
-        rendered.push(<Heading>{block.block.plaintext}</Heading>);
+        rendered.push(
+          <Heading>
+            {renderRichText(block.block.plaintext, block.block.facets)}
+          </Heading>,
+        );
         break;
       }
       case "pub.leaflet.blocks.text":
-        if (block.block.facets?.length) {
-          const chunks: JSXChild[] = [];
-          let lastEnd = 0;
-          for (const facet of block.block.facets) {
-            chunks.push(
-              block.block.plaintext.slice(lastEnd, facet.index.byteStart),
-            );
-            for (const feature of facet.features) {
-              switch (feature.$type) {
-                case "pub.leaflet.richtext.facet#link": {
-                  const text = block.block.plaintext.slice(
-                    facet.index.byteStart,
-                    facet.index.byteEnd,
-                  );
-                  chunks.push(<a href={feature.uri}>{text}</a>);
-                  lastEnd = facet.index.byteEnd;
-                  break;
-                }
-                case "pub.leaflet.richtext.facet#code": {
-                  const text = block.block.plaintext.slice(
-                    facet.index.byteStart,
-                    facet.index.byteEnd,
-                  );
-                  chunks.push(<code>{text}</code>);
-                  lastEnd = facet.index.byteEnd;
-                  break;
-                }
-                default: {
-                  const text = block.block.plaintext.slice(
-                    facet.index.byteStart,
-                    facet.index.byteEnd,
-                  );
-                  chunks.push(text);
-                  lastEnd = facet.index.byteEnd;
-                  break;
-                }
-              }
-            }
-          }
-          if (lastEnd < block.block.plaintext.length) {
-            chunks.push(block.block.plaintext.slice(lastEnd));
-          }
-          rendered.push(<p>{chunks}</p>);
-        } else {
-          rendered.push(<p>{block.block.plaintext}</p>);
-        }
+        rendered.push(
+          <p>{renderRichText(block.block.plaintext, block.block.facets)}</p>,
+        );
         break;
       case "pub.leaflet.blocks.image": {
         const link = (block.block.image as { ref?: { $link?: string } })?.ref
@@ -146,15 +110,19 @@ function renderBlocks(
       case "pub.leaflet.blocks.code": {
         const text = block.block.plaintext;
         if (block.block.language && supportedLangs.has(block.block.language)) {
-          const code = highlighter.codeToHtml(block.block.plaintext, {
-            lang: block.block.language as any,
-            theme,
-          });
+          const code = highlighter
+            .codeToHtml(block.block.plaintext, {
+              lang: (block.block.language === "shellscript"
+                ? "shell"
+                : block.block.language) as any,
+              theme,
+            })
+            .trim();
           rendered.push(<div innerHTML={code} />);
         } else {
           rendered.push(
             <pre>
-              <code>{text}</code>
+              <code>{text.trim()}</code>
             </pre>,
           );
         }
@@ -202,6 +170,81 @@ function renderBlocks(
   }
 
   return rendered;
+}
+
+function renderRichText(
+  plaintext: string,
+  facets: PubLeafletRichtextFacet.Main[] | undefined,
+): JSXChild[] {
+  if (!facets?.length) {
+    return [plaintext];
+  }
+
+  const spans = facets.map((facet) => ({
+    start: codeUnitIndexAtByte(plaintext, facet.index.byteStart),
+    end: codeUnitIndexAtByte(plaintext, facet.index.byteEnd),
+    features: facet.features,
+  }));
+
+  const points = new Set<number>([0, plaintext.length]);
+  for (const span of spans) {
+    points.add(span.start);
+    points.add(span.end);
+  }
+  const stops = [...points].sort((a, b) => a - b);
+
+  const chunks: JSXChild[] = [];
+  for (let i = 0; i < stops.length - 1; i++) {
+    const start = stops[i];
+    const end = stops[i + 1];
+    if (end <= start) continue;
+    const features = spans
+      .filter((span) => span.start <= start && span.end >= end)
+      .flatMap((span) => span.features);
+    chunks.push(applyFeatures(plaintext.slice(start, end), features));
+  }
+  return chunks;
+}
+
+function applyFeatures(
+  text: string,
+  features: PubLeafletRichtextFacet.Main["features"][number][],
+): JSXChild {
+  const feature =
+    features.find((f) => f.$type === "pub.leaflet.richtext.facet#link") ??
+    features.find((f) => f.$type === "pub.leaflet.richtext.facet#code");
+  switch (feature?.$type) {
+    case "pub.leaflet.richtext.facet#link":
+      return <a href={feature.uri}>{text}</a>;
+    case "pub.leaflet.richtext.facet#code":
+      return <code>{text}</code>;
+    default:
+      return text;
+  }
+}
+
+function codeUnitIndexAtByte(text: string, byteIndex: number): number {
+  let bytePos = 0;
+  let codePos = 0;
+  for (const char of text) {
+    if (bytePos === byteIndex) {
+      return codePos;
+    }
+    const codePoint = char.codePointAt(0)!;
+    bytePos +=
+      codePoint < 0x80
+        ? 1
+        : codePoint < 0x800
+          ? 2
+          : codePoint < 0x10000
+            ? 3
+            : 4;
+    if (bytePos > byteIndex) {
+      return codePos;
+    }
+    codePos += char.length;
+  }
+  return text.length;
 }
 
 function headingTag(level: number | undefined) {
