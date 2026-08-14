@@ -7,6 +7,10 @@
   margin-bottom: 4rem;
   view-transition-name: header;
 
+  svg {
+    fill: currentColor;
+  }
+
   & > a {
     font-size: 1.1rem;
   }

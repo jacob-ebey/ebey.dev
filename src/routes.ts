@@ -4,6 +4,7 @@ export const routes = route({
   home: get("/"),
   blog: get("/blog"),
   "blog-post": get("/blog/:rkey"),
+  resume: get("/resume"),
   menu: get("/menu"),
   subscribe: get("/subscribe"),
   rss: get("/feed.xml"),

@@ -5,6 +5,7 @@
 @import "./styles/header.css";
 @import "./styles/home.css";
 @import "./styles/menu.css";
+@import "./styles/resume.css";
 
 @view-transition {
   navigation: auto;
@@ -15,7 +16,7 @@ html {
 }
 
 body {
-  max-width: 80ch;
+  max-width: 210mm;
   min-height: 100vh;
   margin: 0 auto;
   padding: 4rem 1.5rem;
@@ -27,7 +28,7 @@ svg {
   width: 1.75rem;
   height: 1.75rem;
   stroke: var(--text-color);
-  fill: var(--text-color);
+  color: var(--text-color);
 }
 
 img {
