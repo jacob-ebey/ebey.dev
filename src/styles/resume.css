@@ -1,4 +1,8 @@
 @media print {
+  :root {
+    color-scheme: light !important;
+  }
+
   body {
     padding: 0 !important;
     max-width: unset !important;

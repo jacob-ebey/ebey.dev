@@ -12,8 +12,9 @@ export default createAction(routes.resume, async ({ render }) => {
         <div>
           <h1>Jacob Ebey</h1>
           <p>
-            Sr. Software Engineer with +{yearsOfExperience} years of experience
-            and a focus on the underlying tech that backs the modern web stack.
+            Sr. Software Engineer with over {yearsOfExperience} years of
+            experience and a focus on the underlying tech that backs the modern
+            web stack.
           </p>
           <section>
             <header>
